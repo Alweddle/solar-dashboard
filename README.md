@@ -1,11 +1,12 @@
 # ☀️ Solar Dashboard — Monitoring photovoltaïque temps réel
 
-> Système complet de monitoring de production solaire, autoconsommation et injection réseau,  
-> construit avec des outils open-source sur Raspberry Pi.
+> Système complet de monitoring de production solaire, autoconsommation et injection réseau,
+> construit avec des outils open-source sur Raspberry Pi — **660+ jours de données**.
 
 [![Dashboard](https://img.shields.io/badge/Dashboard-Looker%20Studio-4285F4?style=flat&logo=googleanalytics&logoColor=white)](https://datastudio.google.com/reporting/83718eaa-c527-4e4a-a45c-089a4e793b75)
 [![Jeedom](https://img.shields.io/badge/Domotique-Jeedom-00b050?style=flat&logoColor=white)](https://www.jeedom.com)
 [![OpenDTU](https://img.shields.io/badge/Onduleurs-OpenDTU-orange?style=flat&logoColor=white)](https://github.com/tbnobody/OpenDTU)
+[![Depuis](https://img.shields.io/badge/Depuis-Août%202024-yellow?style=flat)]()
 
 ---
 
@@ -13,7 +14,22 @@
 
 🔗 **[Voir le dashboard Looker Studio](https://datastudio.google.com/reporting/83718eaa-c527-4e4a-a45c-089a4e793b75)**
 
-![Dashboard Preview](assets/dashboard_preview.png)
+> Le dashboard est multi-pages : Accueil · Trim/Sais/Ans · Sem/Mens · Record
+
+---
+
+## ⚡ Chiffres clés (au 20/05/2026)
+
+| Indicateur | Valeur |
+|---|---|
+| 🌞 Production cumulée | **7 352 kWh** |
+| 🏠 Autoconsommation cumulée | **2 837 kWh** |
+| 🔌 Injection réseau cumulée | **4 516 kWh** |
+| 💶 Gains totaux cumulés | **1 353 €** |
+| 📈 Taux d'autoconso moyen | **40%** |
+| 🏡 Taux de couverture moyen | **30%** |
+| 💰 Prix kWh moyen | **0,184 €** |
+| 📅 ROI estimé | **~2048** (22 ans) |
 
 ---
 
@@ -49,12 +65,18 @@
 ┌─────────────────────────────────────────────────────────┐
 │              VISUALISATION                              │
 │                                                         │
-│   Google Sheet (source de données)                      │
+│   Google Sheet (34 colonnes, 660+ lignes)               │
+│   ├── 4 colonnes sources (Conso / Prod / Injection)     │
+│   ├── Cumuls kWh & gains €                              │
+│   ├── Taux autoconso / couverture / injection           │
+│   ├── ROI & amortissement dynamique                     │
+│   └── Segmentation semaine / mois / saison / année      │
 │        ↓                                                │
-│   Looker Studio Dashboard                               │
-│   ├── Production J-3 / J-2 / Hier / Semaine / Mois     │
-│   ├── Taux d'autoconsommation & couverture              │
-│   ├── Gains journaliers & ROI                           │
+│   Looker Studio Dashboard (5 pages)                     │
+│   ├── Accueil — synthèse J-3/J-2/Hier/Sem/Mois/An      │
+│   ├── Trim / Sais / Ans                                 │
+│   ├── Sem / Mens                                        │
+│   ├── Records                                           │
 │   └── iFrame intégré dans Jeedom                        │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
@@ -67,8 +89,8 @@
 | Composant | Rôle |
 |---|---|
 | **Panneaux solaires + Micro-onduleurs Hoymiles** | Production d'énergie |
-| **OpenDTU (ESP32)** | Passerelle WiFi vers Jeedom via protocole DTU |
-| **Lixee ZLinky** | Lecture du compteur Linky (injection / conso) via Zigbee |
+| **OpenDTU (ESP32 — firmware v24.6.29)** | Passerelle WiFi vers Jeedom |
+| **Lixee ZLinky** | Lecture compteur Linky via Zigbee (conso + injection) |
 | **Raspberry Pi** | Serveur Jeedom — cerveau du système |
 
 ---
@@ -77,23 +99,11 @@
 
 | Outil | Usage |
 |---|---|
-| **Jeedom** | Domotique, collecte et historisation des données |
-| **JeeZigbee** | Plugin Zigbee pour Jeedom (ZLinky + OpenDTU) |
-| **PHP (scénario Jeedom)** | Export des données CSV → base SQL → Google Sheet |
-| **Google Sheet** | Stockage structuré des données journalières |
-| **Looker Studio** | Dashboard de visualisation multi-pages |
-
----
-
-## 📈 Données collectées
-
-| Métrique | Source | Fréquence |
-|---|---|---|
-| Production (kWh) | OpenDTU → Hoymiles | Temps réel |
-| Consommation (kWh) | Lixee ZLinky → Linky | Temps réel |
-| Injection réseau (kWh) | Lixee ZLinky → Linky | Temps réel |
-| Gains (€) | Calculé dans Looker | Journalier |
-| ROI | Calculé dans Looker | Cumulatif |
+| **Jeedom** | Domotique, collecte et historisation |
+| **JeeZigbee** | Plugin Zigbee (ZLinky + OpenDTU) |
+| **PHP (scénario Jeedom)** | Export CSV → SQL → Google Sheet chaque soir |
+| **Google Sheet** | 34 colonnes de données calculées, 660+ jours |
+| **Looker Studio** | Dashboard 5 pages, intégré en iFrame dans Jeedom |
 
 ---
 
@@ -101,13 +111,11 @@
 
 ```
 solar-dashboard/
-├── README.md                  # Ce fichier
+├── README.md                        # Ce fichier
 ├── scripts/
-│   └── import_historique.php  # Import CSV → base Jeedom
-├── google-sheet/
-│   └── structure_sheet.md     # Structure du Google Sheet
-└── assets/
-    └── dashboard_preview.png  # Capture du dashboard
+│   └── import_historique.php        # Import CSV → base Jeedom
+└── google-sheet/
+    └── structure_sheet.md           # Documentation des 34 colonnes
 ```
 
 ---
@@ -135,3 +143,4 @@ solar-dashboard/
 
 [![CV](https://img.shields.io/badge/CV-alweddle.github.io-00d4aa?style=flat&logo=github)](https://alweddle.github.io)
 [![Email](https://img.shields.io/badge/Email-alexandre.chretien60%40gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:alexandre.chretien60@gmail.com)
+
