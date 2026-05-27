@@ -11,7 +11,7 @@
 
 ## 📊 Statistiques — *Mises à jour automatiquement chaque matin*
 
-### ☀️ Hier — 26/05/2026
+### ☀️ Le — 26/05/2026
 | Métrique | Valeur |
 |---|---|
 | ⚡ Production | **25.6 kWh** |
