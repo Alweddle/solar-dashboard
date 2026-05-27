@@ -53,6 +53,7 @@ solar-dashboard/
 │   └── record_solaire.php          ← Scénario record de production ☀️
 └── google-sheet/
     ├── import_script.md            ← Documentation du script d'import
+    ├── structure_sheet.md          ← Structure CSV
     └── apps-script/
         ├── importTxtToSheetAndCopyFormulas.gs  ← Import CSV → Google Sheet
         └── updateGitHubReadme.gs               ← README dynamique GitHub
