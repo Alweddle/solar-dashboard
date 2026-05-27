@@ -5,22 +5,24 @@
 [![Made with Jeedom](https://img.shields.io/badge/Jeedom-4.0-green?style=flat&logo=homeassistant)](https://www.jeedom.com)
 [![Looker Studio](https://img.shields.io/badge/Looker_Studio-Dashboard-blue?style=flat&logo=google)](https://datastudio.google.com)
 [![Raspberry Pi](https://img.shields.io/badge/Raspberry_Pi_4-4Go-red?style=flat&logo=raspberrypi)](https://www.raspberrypi.com)
-[![Mis à jour](https://img.shields.io/badge/Mis_à_jour_le-27_05_2026-lightgrey)](https://github.com/Alweddle/solar-dashboard)
+[![Mis à jour](https://img.shields.io/badge/Mis_à_jour_le-26_05_2026-lightgrey)](https://github.com/Alweddle/solar-dashboard)
 
 ---
 
-## 📊 Statistiques en direct
+## 📊 Statistiques — *Mises à jour automatiquement chaque matin*
 
-> *Mis à jour automatiquement chaque matin*
+### ☀️ Hier — 26/05/2026
+| Métrique | Valeur |
+|---|---|
+| ⚡ Production | **25.6 kWh** |
+| 💶 Gain | **6.91 €** |
+| ♻️ Taux d'autoconsommation | **100 %** |
 
+### 📈 Depuis le 01/08/2024
 | Métrique | Valeur |
 |---|---|
 | ⚡ Production cumulée | **7 498 kWh** |
 | 💶 Gains cumulés | **1 392 €** |
-| ♻️ Taux d'autoconsommation | **982110 %** |
-| 📈 Taux d'amortissement | **NaN %** |
-| 📅 Depuis | 01/08/2024 |
-| 🏁 Fin d'amortissement prévue | 0.6 (dans 0 jours) |
 | 🏆 Record journalier | **28.9 kWh** — 3 juillet 2025 |
 
 ---
@@ -58,11 +60,9 @@ solar-dashboard/
 ## ⚙️ Scénarios Jeedom
 
 ### 📈 Export historique (`scripts/import_historique.php`)
-
 Scénario PHP qui tourne chaque soir et exporte l'historique des commandes Jeedom vers un fichier CSV.
 
 ### 🏆 Record de production (`scripts/record_solaire.php`)
-
 Scénario PHP qui détecte chaque soir si un nouveau record de production journalière est battu et envoie une notification Telegram.
 
 **Variables Jeedom utilisées :**
@@ -88,10 +88,10 @@ Scénario PHP qui détecte chaque soir si un nouveau record de production journa
 
 | Date | Version | Changements |
 |---|---|---|
-| Mai 2026 | v2.0 | Ajout scénario record solaire + README dynamique |
+| Mai 2026 | v2.0 | README dynamique + scénario record solaire |
 | Mars 2026 | v1.1 | Wiki complet + documentation Google Sheet |
-| Août 2024 | v1.0 | Mise en place initiale du système |
+| Août 2024 | v1.0 | Mise en place initiale |
 
 ---
 
-*README généré automatiquement le 27/05/2026 via Google Apps Script*
+*README généré automatiquement le 26/05/2026 via Google Apps Script* 🤖
