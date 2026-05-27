@@ -1,146 +1,97 @@
-# ☀️ Solar Dashboard — Monitoring photovoltaïque temps réel
+# ☀️ Solar Dashboard
 
-> Système complet de monitoring de production solaire, autoconsommation et injection réseau,
-> construit avec des outils open-source sur Raspberry Pi — **660+ jours de données**.
+> Monitoring photovoltaïque temps réel — OpenDTU + Jeedom + Looker Studio
 
-[![Dashboard](https://img.shields.io/badge/Dashboard-Looker%20Studio-4285F4?style=flat&logo=googleanalytics&logoColor=white)](https://datastudio.google.com/reporting/83718eaa-c527-4e4a-a45c-089a4e793b75)
-[![Jeedom](https://img.shields.io/badge/Domotique-Jeedom-00b050?style=flat&logoColor=white)](https://www.jeedom.com)
-[![OpenDTU](https://img.shields.io/badge/Onduleurs-OpenDTU-orange?style=flat&logoColor=white)](https://github.com/tbnobody/OpenDTU)
-[![Depuis](https://img.shields.io/badge/Depuis-Août%202024-yellow?style=flat)]()
-
----
-
-## 📊 Dashboard en direct
-
-🔗 **[Voir le dashboard Looker Studio](https://datastudio.google.com/reporting/83718eaa-c527-4e4a-a45c-089a4e793b75)**
-
-> Le dashboard est multi-pages : Accueil · Trim/Sais/Ans · Sem/Mens · Record
+[![Made with Jeedom](https://img.shields.io/badge/Jeedom-4.0-green?style=flat&logo=homeassistant)](https://www.jeedom.com)
+[![Looker Studio](https://img.shields.io/badge/Looker_Studio-Dashboard-blue?style=flat&logo=google)](https://datastudio.google.com)
+[![Raspberry Pi](https://img.shields.io/badge/Raspberry_Pi_4-4Go-red?style=flat&logo=raspberrypi)](https://www.raspberrypi.com)
+[![Mis à jour](https://img.shields.io/badge/Mis_à_jour_le-27_05_2026-lightgrey)](https://github.com/Alweddle/solar-dashboard)
 
 ---
 
-## ⚡ Chiffres clés (au 20/05/2026)
+## 📊 Statistiques en direct
 
-| Indicateur | Valeur |
+> *Mis à jour automatiquement chaque matin*
+
+| Métrique | Valeur |
 |---|---|
-| 🌞 Production cumulée | **7 352 kWh** |
-| 🏠 Autoconsommation cumulée | **2 837 kWh** |
-| 🔌 Injection réseau cumulée | **4 516 kWh** |
-| 💶 Gains totaux cumulés | **1 353 €** |
-| 📈 Taux d'autoconso moyen | **40%** |
-| 🏡 Taux de couverture moyen | **30%** |
-| 💰 Prix kWh moyen | **0,184 €** |
-| 📅 ROI estimé | **~2048** (22 ans) |
+| ⚡ Production cumulée | **7 498 kWh** |
+| 💶 Gains cumulés | **1 392 €** |
+| ♻️ Taux d'autoconsommation | **982110 %** |
+| 📈 Taux d'amortissement | **NaN %** |
+| 📅 Depuis | 01/08/2024 |
+| 🏁 Fin d'amortissement prévue | 0.6 (dans 0 jours) |
+| 🏆 Record journalier | **28.9 kWh** — 3 juillet 2025 |
 
 ---
 
-## 🏗 Architecture du système
+## 🏗 Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│              PRODUCTION SOLAIRE                         │
-│                                                         │
-│   Panneaux solaires                                     │
-│        ↓                                                │
-│   Micro-onduleurs Hoymiles                              │
-│        ↓                                                │
-│   OpenDTU (ESP32) ──── WiFi ────→ Jeedom               │
-│                                      ↑                  │
-│   Compteur Linky                     │                  │
-│        ↓                             │                  │
-│   Lixee ZLinky (Zigbee) ────────────┘                  │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-                         ↓
-┌─────────────────────────────────────────────────────────┐
-│              TRAITEMENT & STOCKAGE                      │
-│                                                         │
-│   Raspberry Pi                                          │
-│   └── Jeedom                                            │
-│       ├── Plugin JeeZigbee (OpenDTU + ZLinky)           │
-│       ├── Historique CSV (production / injection)       │
-│       └── Scénario PHP → export SQL → Google Sheet      │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-                         ↓
-┌─────────────────────────────────────────────────────────┐
-│              VISUALISATION                              │
-│                                                         │
-│   Google Sheet (34 colonnes, 660+ lignes)               │
-│   ├── 4 colonnes sources (Conso / Prod / Injection)     │
-│   ├── Cumuls kWh & gains €                              │
-│   ├── Taux autoconso / couverture / injection           │
-│   ├── ROI & amortissement dynamique                     │
-│   └── Segmentation semaine / mois / saison / année      │
-│        ↓                                                │
-│   Looker Studio Dashboard (5 pages)                     │
-│   ├── Accueil — synthèse J-3/J-2/Hier/Sem/Mois/An      │
-│   ├── Trim / Sais / Ans                                 │
-│   ├── Sem / Mens                                        │
-│   ├── Records                                           │
-│   └── iFrame intégré dans Jeedom                        │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+Panneaux solaires
+      ↓
+Micro-onduleurs Hoymiles
+      ↓
+OpenDTU (ESP32 WiFi)
+      ↓
+Jeedom (Raspberry Pi 4)
+      ↓
+Historique CSV → Google Sheet → Looker Studio
 ```
 
 ---
 
-## 🔧 Matériel utilisé
-
-| Composant | Rôle |
-|---|---|
-| **Panneaux solaires + Micro-onduleurs Hoymiles** | Production d'énergie |
-| **OpenDTU (ESP32 — firmware v24.6.29)** | Passerelle WiFi vers Jeedom |
-| **Lixee ZLinky** | Lecture compteur Linky via Zigbee (conso + injection) |
-| **Raspberry Pi** | Serveur Jeedom — cerveau du système |
-
----
-
-## 🧠 Stack logicielle
-
-| Outil | Usage |
-|---|---|
-| **Jeedom** | Domotique, collecte et historisation |
-| **JeeZigbee** | Plugin Zigbee (ZLinky + OpenDTU) |
-| **PHP (scénario Jeedom)** | Export CSV → SQL → Google Sheet chaque soir |
-| **Google Sheet** | 34 colonnes de données calculées, 660+ jours |
-| **Looker Studio** | Dashboard 5 pages, intégré en iFrame dans Jeedom |
-
----
-
-## 📁 Structure du projet
+## 📁 Structure du repo
 
 ```
 solar-dashboard/
-├── README.md                        # Ce fichier
+├── README.md
 ├── scripts/
-│   └── import_historique.php        # Import CSV → base Jeedom
+│   ├── import_historique.php       ← Export CSV → Google Sheet
+│   └── record_solaire.php          ← Scénario record de production ☀️
 └── google-sheet/
-    └── structure_sheet.md           # Documentation des 34 colonnes
+    └── structure_sheet.md          ← Documentation des 34 colonnes
 ```
 
 ---
 
-## 🚀 Reproduire ce projet
+## ⚙️ Scénarios Jeedom
 
-### Prérequis
-- Raspberry Pi avec Jeedom installé
-- Plugin JeeZigbee
-- Compte Google (Google Sheet + Looker Studio)
-- OpenDTU flashé sur un ESP32
-- Lixee ZLinky
+### 📈 Export historique (`scripts/import_historique.php`)
 
-### Étapes
-1. Flasher OpenDTU sur un ESP32 et le connecter aux micro-onduleurs
-2. Installer JeeZigbee dans Jeedom et appairer le ZLinky
-3. Laisser Jeedom historiser les commandes (production + injection)
-4. Déployer le script `import_historique.php` dans un scénario Jeedom
-5. Connecter Google Sheet comme source dans Looker Studio
-6. Dupliquer le dashboard et adapter les métriques
+Scénario PHP qui tourne chaque soir et exporte l'historique des commandes Jeedom vers un fichier CSV.
+
+### 🏆 Record de production (`scripts/record_solaire.php`)
+
+Scénario PHP qui détecte chaque soir si un nouveau record de production journalière est battu et envoie une notification Telegram.
+
+**Variables Jeedom utilisées :**
+
+| Variable | Rôle |
+|---|---|
+| `Old_Max_Prod_Solaire` | Record absolu en kWh |
+| `Old_Date_Record_Solaire` | Date du record (texte lisible) |
+| `Old_Date_Record_Solaire2` | Date du record (timestamp technique) |
+| `nbjour_record` | Nb de jours depuis le dernier record |
 
 ---
 
-## 📬 Contact
+## 🔗 Liens
 
-[![CV](https://img.shields.io/badge/CV-alweddle.github.io-00d4aa?style=flat&logo=github)](https://alweddle.github.io)
-[![Email](https://img.shields.io/badge/Email-alexandre.chretien60%40gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:alexandre.chretien60@gmail.com)
+- 📊 [Dashboard Looker Studio](https://datastudio.google.com/reporting/83718eaa-c527-4e4a-a45c-089a4e793b75)
+- 💻 [CV interactif](https://alweddle.github.io)
+- 🌡️ [Repo Canicule](https://github.com/Alweddle/jeedom-canicule)
 
+---
+
+## 📝 Changelog
+
+| Date | Version | Changements |
+|---|---|---|
+| Mai 2026 | v2.0 | Ajout scénario record solaire + README dynamique |
+| Mars 2026 | v1.1 | Wiki complet + documentation Google Sheet |
+| Août 2024 | v1.0 | Mise en place initiale du système |
+
+---
+
+*README généré automatiquement le 27/05/2026 via Google Apps Script*
