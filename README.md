@@ -5,24 +5,24 @@
 [![Made with Jeedom](https://img.shields.io/badge/Jeedom-4.0-green?style=flat&logo=homeassistant)](https://www.jeedom.com)
 [![Looker Studio](https://img.shields.io/badge/Looker_Studio-Dashboard-blue?style=flat&logo=google)](https://datastudio.google.com)
 [![Raspberry Pi](https://img.shields.io/badge/Raspberry_Pi_4-4Go-red?style=flat&logo=raspberrypi)](https://www.raspberrypi.com)
-[![Mis à jour](https://img.shields.io/badge/Mis_à_jour_le-16_10_2026-lightgrey)](https://github.com/Alweddle/solar-dashboard)
+[![Mis à jour](https://img.shields.io/badge/Mis_à_jour_le-17_10_2026-lightgrey)](https://github.com/Alweddle/solar-dashboard)
 
 ---
 
 ## 📊 Statistiques — *Mises à jour automatiquement chaque matin*
 
-### ☀️ Le 16/10/2026
+### ☀️ Le 17/10/2026
 | Métrique | Valeur |
 |---|---|
-| ⚡ Production | **6.2 kWh** |
-| 💶 Gain | **1.67 €** |
+| ⚡ Production | **11.3 kWh** |
+| 💶 Gain | **3.05 €** |
 | ♻️ Taux d'autoconsommation | **100 %** |
 
 ### 📈 Depuis le 01/08/2024
 | Métrique | Valeur |
 |---|---|
-| ⚡ Production cumulée | **9 989 kWh** |
-| 💶 Gains cumulés | **1 889 €** |
+| ⚡ Production cumulée | **10 000 kWh** |
+| 💶 Gains cumulés | **1 892 €** |
 | 🏆 Record journalier | **28.9 kWh** — 3 juillet 2025 |
 
 ---
@@ -98,4 +98,4 @@ Scénario PHP qui détecte chaque soir si un nouveau record de production journa
 
 ---
 
-*README généré automatiquement le 16/10/2026 via Google Apps Script* 🤖
+*README généré automatiquement le 17/10/2026 via Google Apps Script* 🤖
